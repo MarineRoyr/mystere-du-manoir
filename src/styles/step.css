@@ -1,0 +1,233 @@
+/* Police Montserrat et Georgia */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Tenor+Sans&display=swap");
+.step-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  background-color: rgba(253, 253, 250, 0.8);
+  color: #2c1c17; /* Texte marron foncé */
+  font-family: "Montserrat", sans-serif;
+  width: 80%;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+h2,
+h3 {
+  color: #282c17; /* Texte marron foncé */
+}
+
+.welcome-section h3 {
+  text-transform: uppercase;
+}
+
+/* Section de bienvenue */
+.welcome-section {
+  color: rgb(12, 24, 1); /* Texte marron foncé */
+  font-family: "Tenor Sans";
+  font-size: 50px;
+  padding: 15px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+.clue-container {
+  background-color: rgba(1, 19, 1, 0.7); /* Fond noir */
+  color: #fdfdfa; /* Texte crème/blanc cassé */
+  padding: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+
+/* Conteneur pour l'iframe avec effet moulure */
+.responsive-iframe-container {
+  position: relative;
+  width: 100%;
+  height: 500px; /* Ajustable selon la taille souhaitée */
+  overflow: hidden;
+  color: #fdfdfa; /* Texte crème */
+  margin-bottom: 20px;
+  border-radius: 30px;
+  font-family: "Tenor Sans";
+  font-size: 28px;
+}
+
+.responsive-iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+/* Texte */
+.text-content {
+  text-align: center;
+  width: 100%;
+  color: #ffffff; /* Texte marron foncé */
+}
+
+p {
+  color: #ffffff;
+  margin: 10px 0;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* Style vintage pour le score et chrono */
+.score,
+.chrono-display {
+  font-family: "Tenor Sans";
+  font-size: 50px;
+  color: #fdfdfa; /* Texte crème */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  text-align: center;
+}
+
+.chrono {
+  margin-left: 10%;
+}
+
+/* Input de texte */
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  margin: 40px 0;
+  border-radius: 0; /* Pas de bord arrondi */
+  background-color: #fffdfd;
+  color: #2c1c17;
+  box-sizing: border-box;
+  border-radius: 4px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+input[disabled] {
+  background-color: #555;
+  color: #999;
+}
+
+/* Boutons stylés */
+/* Boutons stylés */
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: white;
+  background-color: rgba(1, 19, 1, 0.7);
+  border: 2px solid white; /* Bordure blanche */
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  border-radius: 4px;
+  gap: 20px;
+}
+
+button:disabled {
+  border-color: #777;
+  color: #777;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #354133; /* Change de couleur au hover pour un contraste */
+  color: white; /* Texte en blanc au hover */
+}
+
+button::before {
+  content: " ➔";
+}
+
+/* Boîte à indices */
+.responses-container {
+  color: #2c1c17; /* Texte marron foncé */
+  width: 100%;
+  padding: 15px;
+  text-align: left;
+  text-transform: capitalize;
+  font-size: 28px;
+}
+
+.responses-container ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.responses-container ul li {
+  color: #2c1c17; /* Texte marron foncé */
+  margin: 5px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .step-container {
+    padding: 10px;
+  }
+
+  h2,
+  h3 {
+    font-size: 30px;
+  }
+
+  .chrono-display,
+  .score {
+    font-size: 30px;
+  }
+
+  button {
+    font-size: 20px;
+    padding: 8px 12px;
+  }
+
+  .responsive-iframe-container {
+    height: 300px; /* Ajustable selon la taille souhaitée */
+  }
+}
+
+@media (max-width: 465px) {
+  .step-container {
+    padding: 10px;
+  }
+
+  h2,
+  h3 {
+    font-size: 25px;
+  }
+
+  .chrono-display,
+  .score {
+    font-size: 26px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+
+  p,
+  li {
+    font-size: 20px;
+  }
+
+  .responsive-iframe-container {
+    height: 200px; /* Ajustable selon la taille souhaitée */
+  }
+}
