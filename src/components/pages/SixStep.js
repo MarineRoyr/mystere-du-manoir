@@ -1,25 +1,29 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
 
 const SixStep = () => {
-    const { teamName, score, setScore, timeLeft, setResponses, responses } = useContext(TeamNameContext);
+    const { teamName, score, setScore, timeLeft, addResponse, responses, inputs, updateInput } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
 
     // Réponses valides
-    const validAnswers = ["Innocence", "innocence"];
+    const validAnswers = ["Innocence", "innocence", "INNOCENCE"];
     // Indice caché à Sixnir lorsque le bouton est cliqué
     const hint = "L'indice est : Une qualité souvent associée à l'enfance, symbolisant la pureté et l'absence de malice.Ce que l'on perd parfois avec l'âge, souvent lié à la perception de la moralité. Cherchez ensuite sur la pièce palière au 1er étage, un bouquet de fleurs vous y attend avec de nouvelles surprises. ";
 
-    // Validation de l'indice
+    useEffect(() => {
+        setInputValue(inputs.sixStep);
+    }, [inputs.sixStep]);
+
     const handleValidation = () => {
         if (validAnswers.includes(inputValue.trim())) {
             setIsValid(true);
-            setResponses((prevResponses) => [...prevResponses, inputValue.trim()]); // Ajouter la réponse à la liste
-            setInputValue(''); // Réinitialiser le champ de saisie
+            addResponse(inputValue.trim());
+            // Mettre à jour l'input dans le contexte
+            updateInput('sixStep', inputValue.trim()); // Mise à jour de l'input
         } else {
             setIsValid(false);
             alert('Indice incorrect. Essayez encore!');
@@ -99,7 +103,7 @@ const SixStep = () => {
 
             {/* Affichage des réponses Sixnies */}
             <div className="responses-container">
-                <h3>Réponses Sixnies :</h3>
+                <h3>Boîte à indices:</h3>
                 <ul>
                     {responses.map((response, index) => (
                         <li key={index}>{response}</li>

@@ -1,31 +1,34 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
 
 const FourStep = () => {
-    const { teamName, score, setScore, timeLeft, setResponses, responses } = useContext(TeamNameContext);
+    const { teamName, score, setScore, timeLeft, addResponse, responses, inputs, updateInput } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
 
     // Réponses valides
-    const validAnswers = ["etoile", "Etoile", "étoile"];
+    const validAnswers = ["etoile", "Etoile", "étoile", "Étoile", "ÉTOILE"];
     // Indice caché à fournir lorsque le bouton est cliqué
     const hint = "L'indice est : Ce mot brille dans le ciel nocturne et est souvent associé aux rêves. Renseignez le à votre guide, il est aussi important d'aller se procurer un peu de lecture, et de bien connaître son alphabet pour trouver le titre du livre qui renferme la suite des énigmes !";
+    // Utilisez useEffect pour pré-remplir l'input avec la valeur de inputs.secondStep
+    useEffect(() => {
+        setInputValue(inputs.fourStep);
+    }, [inputs.fourStep]);
 
-    // Validation de l'indice
     const handleValidation = () => {
         if (validAnswers.includes(inputValue.trim())) {
             setIsValid(true);
-            setResponses((prevResponses) => [...prevResponses, inputValue.trim()]); // Ajouter la réponse à la liste
-            setInputValue(''); // Réinitialiser le champ de saisie
+            addResponse(inputValue.trim());
+            // Mettre à jour l'input dans le contexte
+            updateInput('fourStep', inputValue.trim()); // Mise à jour de l'input
         } else {
             setIsValid(false);
             alert('Indice incorrect. Essayez encore!');
         }
     };
-
     // Passer à la page suivante
     const goToNextStep = () => {
         if (isValid) {

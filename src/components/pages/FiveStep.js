@@ -1,31 +1,35 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
 
 const FiveStep = () => {
-    const { teamName, score, setScore, timeLeft, setResponses, responses } = useContext(TeamNameContext);
+    const { teamName, score, setScore, timeLeft, addResponse, responses, inputs, updateInput } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
 
     // Réponses valides
-    const validAnswers = ["Lune", "lune"];
+    const validAnswers = ["Lune", "lune", "LUNE"];
     // Indice caché à Fivenir lorsque le bouton est cliqué
     const hint = "L'indice est : Ce mot éclaire les nuits sombres et peut être en croissant ou pleine. Renseignez le à votre guide, et pensez à remonter tout en haut de la maison afin de découvrir les DEUX indices suivants.";
 
-    // Validation de l'indice
+    // Utilisez useEffect pour pré-remplir l'input avec la valeur de inputs.secondStep
+    useEffect(() => {
+        setInputValue(inputs.fiveStep);
+    }, [inputs.fiveStep]);
+
     const handleValidation = () => {
         if (validAnswers.includes(inputValue.trim())) {
             setIsValid(true);
-            setResponses((prevResponses) => [...prevResponses, inputValue.trim()]); // Ajouter la réponse à la liste
-            setInputValue(''); // Réinitialiser le champ de saisie
+            addResponse(inputValue.trim());
+            // Mettre à jour l'input dans le contexte
+            updateInput('fiveStep', inputValue.trim()); // Mise à jour de l'input
         } else {
             setIsValid(false);
             alert('Indice incorrect. Essayez encore!');
         }
     };
-
     // Passer à la page suivante
     const goToNextStep = () => {
         if (isValid) {

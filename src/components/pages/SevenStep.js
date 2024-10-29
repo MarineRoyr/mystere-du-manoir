@@ -1,25 +1,29 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
 
 const SevenStep = () => {
-    const { teamName, score, setScore, timeLeft, setResponses, responses } = useContext(TeamNameContext);
+    const { teamName, score, setScore, timeLeft, addResponse, responses, inputs, updateInput } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
 
     // Réponses valides
-    const validAnswers = ["rêve", "Rêve", "reve", "Reve"];
+    const validAnswers = ["rêve", "Rêve", "reve", "Reve", "REVE", "RÊVE"];
     // Indice caché à Sevennir lorsque le bouton est cliqué
     const hint = "L'indice est : Un état où l'imaginaire prend le pas sur le réel, rempli de fantaisie et de possibilités infinies. Ce que vous vivez souvent pendant la nuit, lorsque votre esprit voyage au-delà de la réalité. Ce mot à deviner est à renseigner à votre guide, qui vous mènera à l'étape suivante afin de pouvoir effectuer le rituel.";
 
-    // Validation de l'indice
+    useEffect(() => {
+        setInputValue(inputs.sevenStep);
+    }, [inputs.sevenStep]);
+
     const handleValidation = () => {
         if (validAnswers.includes(inputValue.trim())) {
             setIsValid(true);
-            setResponses((prevResponses) => [...prevResponses, inputValue.trim()]); // Ajouter la réponse à la liste
-            setInputValue(''); // Réinitialiser le champ de saisie
+            addResponse(inputValue.trim());
+            // Mettre à jour l'input dans le contexte
+            updateInput('sevenStep', inputValue.trim()); // Mise à jour de l'input
         } else {
             setIsValid(false);
             alert('Indice incorrect. Essayez encore!');

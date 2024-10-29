@@ -11,18 +11,20 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim() === '') {
-      alert('Veuillez entrer un nom d\'équipe valide.');
+      alert("Veuillez entrer un nom d'équipe valide.");
       return; // Ne pas continuer si le champ est vide
     }
     setTeamName(input); // Mettre à jour le nom dans le contexte
     navigate('/first-step'); // Naviguer vers la première étape
   };
 
+  // Fonction pour remettre à zéro le local storage
+  const { resetLocalStorage } = useContext(TeamNameContext);
   return (
     <div className="App">
       <header className="App-header">
         <h1>Le mystère du Manoir</h1>
-        <p >Avant de plonger dans votre enquête, n'oubliez pas de regarder cette vidéo d'introduction !</p>
+        <p>Avant de plonger dans votre enquête, n'oubliez pas de regarder cette vidéo d'introduction !</p>
         <div className="responsive-iframe-container">
           <iframe
             title="Vidéo explicative de la première étape"
@@ -42,6 +44,10 @@ function App() {
             />
             <button type="submit">Enregistrer et Aller à la première étape</button>
           </form>
+          {/* Bouton pour remettre à zéro le local storage */}
+          <button onClick={resetLocalStorage} style={{ marginTop: '20px' }}>
+            Réinitialiser la session A ZERO
+          </button>
         </div>
       </header>
     </div>

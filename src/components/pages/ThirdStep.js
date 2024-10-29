@@ -1,31 +1,33 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
 
 const ThirdStep = () => {
-    const { teamName, score, setScore, timeLeft, setResponses, responses } = useContext(TeamNameContext);
+    const { teamName, score, setScore, timeLeft, addResponse, responses, inputs, updateInput } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
 
     // Réponses valides
-    const validAnswers = ["eventail", "Eventail", "éventail"];
+    const validAnswers = ["eventail", "Eventail", "éventail", "Éventail"];
     // Indice caché à fournir lorsque le bouton est cliqué
     const hint = "L'indice est : Pensez à un objet qu'on secoue pour faire du vent et de se rafraîchir. Il est important de le renseigner à votre guide, et d'en chercher un au premier étage, au sein d'un lieu aux couleurs vives.";
+    useEffect(() => {
+        setInputValue(inputs.thirdStep);
+    }, [inputs.thirdStep]);
 
-    // Validation de l'indice
     const handleValidation = () => {
         if (validAnswers.includes(inputValue.trim())) {
             setIsValid(true);
-            setResponses((prevResponses) => [...prevResponses, inputValue.trim()]); // Ajouter la réponse à la liste
-            setInputValue(''); // Réinitialiser le champ de saisie
+            addResponse(inputValue.trim());
+            // Mettre à jour l'input dans le contexte
+            updateInput('thirdStep', inputValue.trim()); // Mise à jour de l'input
         } else {
             setIsValid(false);
             alert('Indice incorrect. Essayez encore!');
         }
     };
-
     // Passer à la page suivante
     const goToNextStep = () => {
         if (isValid) {

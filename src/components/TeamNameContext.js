@@ -5,66 +5,78 @@ export const TeamNameContext = createContext();
 
 // Le fournisseur de contexte pour encapsuler l'application
 export const TeamNameProvider = ({ children }) => {
-    const [teamName, setTeamName] = useState(localStorage.getItem('teamName') || ''); // Récupérer le nom de l'équipe depuis localStorage
+    const [teamName, setTeamName] = useState(localStorage.getItem('teamName') || '');
     const [score, setScore] = useState(() => {
         const storedScore = localStorage.getItem('score');
-        return storedScore ? parseInt(storedScore) : 50000; // Récupérer le score depuis localStorage ou initialiser à 50 000
+        return storedScore ? parseInt(storedScore) : 50000;
     });
     const [timeLeft, setTimeLeft] = useState(() => {
         const storedTime = localStorage.getItem('timeLeft');
-        return storedTime ? parseInt(storedTime) : 90 * 60; // Récupérer le temps depuis localStorage ou initialiser à 90 minutes
+        return storedTime ? parseInt(storedTime) : 90 * 60;
     });
-    const [timerId, setTimerId] = useState(null); // ID du timer pour pouvoir le nettoyer
+    const [timerId, setTimerId] = useState(null);
     const [responses, setResponses] = useState(() => {
-        const storedResponses = localStorage.getItem('responses');
-        return storedResponses ? JSON.parse(storedResponses) : []; // Récupérer les réponses depuis localStorage
-    }); // Nouvel état pour stocker les réponses
+        const storedResponses = JSON.parse(localStorage.getItem('responses')) || [];
+        return [...new Set(storedResponses)];
+    });
+
     const [isGameOver, setIsGameOver] = useState(false);
 
-    useEffect(() => {
-        // Enregistrer les données dans le localStorage à chaque changement
-        localStorage.setItem('teamName', teamName);
-        localStorage.setItem('score', score);
-        localStorage.setItem('timeLeft', timeLeft);
-        localStorage.setItem('responses', JSON.stringify(responses));
-    }, [teamName, score, timeLeft, responses]);
+    const addResponse = (response) => {
+        setResponses((prevResponses) => {
+            const newResponses = [...new Set([...prevResponses, response])]; // Utiliser Set pour éliminer les doublons
+            localStorage.setItem('responses', JSON.stringify(newResponses)); // Enregistrer dans le localStorage
+            return newResponses;
+        });
+    };
+    const [inputs, setInputs] = useState({ firststep: '', secondStep: '', thirdStep: '', fourstep: '', fivestep: '', sixstep: '', sevenstep: '', ultimatestep: '', scorestep: '' })
 
+
+    const updateInput = (step, value) => {
+        setInputs((prevInputs) => ({
+            ...prevInputs,
+            [step]: value,
+        }));
+    };
     // Fonction pour démarrer le chronomètre
     const startTimer = () => {
         if (timerId) return; // Ne pas démarrer un nouveau timer si déjà en cours
 
         const newTimerId = setInterval(() => {
             setTimeLeft((prevTime) => {
-                const newTime = prevTime - 1; // Réduire le temps restant de 1 seconde
-
-                // Réduire le score de 500 points toutes les 10 minutes (600 secondes)
-                if (newTime % 600 === 0 && newTime > 0) {
-                    setScore((prevScore) => Math.max(prevScore - 500, 0)); // Réduire le score sans descendre sous 0
-                }
+                const newTime = prevTime - 1;
 
                 if (newTime <= 0) {
-                    clearInterval(newTimerId); // Arrêter le timer si le temps est écoulé
+                    clearInterval(newTimerId);
                     alert("Temps écoulé !");
-                    localStorage.clear(); // Effacer le localStorage après que le temps est écoulé
+                    localStorage.clear();
                     return 0;
                 }
-                return newTime; // Retourne le nouveau temps
+                return newTime;
             });
         }, 1000); // Timer de 1 seconde
 
         setTimerId(newTimerId); // Enregistrer l'ID du timer
     };
 
-    // Fonction pour arrêter le chronomètre
-    const stopTimer = () => {
-        if (timerId) {
-            clearInterval(timerId); // Arrêter le timer
-            setTimerId(null); // Réinitialiser l'ID du timer
-        }
-    };
-
+    // Rendre le contexte
     return (
-        <TeamNameContext.Provider value={{ teamName, setTeamName, score, setScore, timeLeft, setTimeLeft, startTimer, stopTimer, responses, setResponses, isGameOver, setIsGameOver }}>
+        <TeamNameContext.Provider value={{
+            teamName,
+            setTeamName,
+            score,
+            setScore,
+            timeLeft,
+            setTimeLeft,
+            startTimer, // Assurez-vous que ceci est présent
+            responses,
+            setResponses,
+            addResponse,
+            inputs,
+            updateInput,
+            isGameOver,
+            setIsGameOver
+        }}>
             {children}
         </TeamNameContext.Provider>
     );

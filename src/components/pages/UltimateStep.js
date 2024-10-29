@@ -1,31 +1,33 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
 
 const UltimateStep = () => {
-    const { teamName, score, setScore, timeLeft, setResponses, responses } = useContext(TeamNameContext);
+    const { teamName, score, setScore, timeLeft, addResponse, responses, inputs, updateInput } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
 
     // Réponses valides
-    const validAnswers = ["liberte", "liberté", "Liberté", "Liberte"];
+    const validAnswers = ["liberte", "liberté", "Liberté", "Liberte", "LIBERTÉ", "LIBERTE"];
     // Indice caché à fournir lorsque le bouton est cliqué
     const hint = "L'indice est : Prenez toutes les premières lettres des mots de votre boîte à outil et tentez de trouver le mot recherché, qui commence par L et finit par E, un état d'être que toute l'humanité souhaite, le contraire de l'esclavage. Renseignez le à votre guide afin d'obtenir le code qui permettra de déverouiller le cryptex contenu dans le coffre que vous trouverez à l'étage sous l'un des lits du Manoir";
+    useEffect(() => {
+        setInputValue(inputs.ultimateStep);
+    }, [inputs.ultimateStep]);
 
-    // Validation de l'indice
     const handleValidation = () => {
         if (validAnswers.includes(inputValue.trim())) {
             setIsValid(true);
-            setResponses((prevResponses) => [...prevResponses, inputValue.trim()]); // Ajouter la réponse à la liste
-            setInputValue(''); // Réinitialiser le champ de saisie
+            addResponse(inputValue.trim());
+            // Mettre à jour l'input dans le contexte
+            updateInput('ultimateStep', inputValue.trim()); // Mise à jour de l'input
         } else {
             setIsValid(false);
             alert('Indice incorrect. Essayez encore!');
         }
     };
-
     // Passer à la page suivante
     const goToNextStep = () => {
         if (isValid) {
