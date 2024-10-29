@@ -9,10 +9,18 @@ const RituelStep = () => {
     const navigate = useNavigate();
     const finalAnswer = "UNION";
 
+    // Supposons que `inputs` soit un prop ou un state à ajouter dans votre composant.
+    useEffect(() => {
+        if (inputs?.rituelStep) {
+            setInputValue(inputs.rituelStep);
+        }
+    }, [inputs]);
+
     const handleFinalSubmission = () => {
         if (inputValue.trim().toUpperCase() === finalAnswer) {
             setIsGameOver(true);
             navigate('/score-step');
+            updateInput('rituelStep', inputValue.trim()); // Assurez-vous que `updateInput` est défini dans votre contexte ou composant
         } else {
             alert('Indice incorrect. Essayez encore!');
         }
