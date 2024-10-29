@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext } from 'react';
 
 // Créez le contexte pour le nom de l'équipe et d'autres états
 export const TeamNameContext = createContext();
