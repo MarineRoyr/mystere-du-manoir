@@ -1,31 +1,33 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TeamNameContext } from '../TeamNameContext';
-import '../../styles/step.css';
+import { TeamNameContext } from './path/to/your/context'; // Mettez à jour le chemin selon votre structure de projet
 
 const RituelStep = () => {
-    const { teamName, responses, addResponse, setIsGameOver } = useContext(TeamNameContext);
+    // Utilisation du contexte pour récupérer les valeurs
+    const { teamName, responses, addResponse, setIsGameOver, inputs, updateInput } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const navigate = useNavigate();
     const finalAnswer = "UNION";
 
-    // Supposons que `inputs` soit un prop ou un state à ajouter dans votre composant.
+    // Mise à jour de l'inputValue à partir de inputs.rituelStep
     useEffect(() => {
         if (inputs?.rituelStep) {
             setInputValue(inputs.rituelStep);
         }
     }, [inputs]);
 
+    // Gestion de la soumission finale
     const handleFinalSubmission = () => {
         if (inputValue.trim().toUpperCase() === finalAnswer) {
             setIsGameOver(true);
             navigate('/score-step');
-            updateInput('rituelStep', inputValue.trim()); // Assurez-vous que `updateInput` est défini dans votre contexte ou composant
+            updateInput('rituelStep', inputValue.trim());
         } else {
             alert('Indice incorrect. Essayez encore!');
         }
     };
 
+    // Gestion de l'ajout de réponse
     const handleAddResponse = () => {
         if (inputValue.trim()) {
             addResponse(inputValue); // Ajoute la réponse au contexte
@@ -38,7 +40,7 @@ const RituelStep = () => {
     return (
         <div className='step-container'>
             <div className='welcome-section'>
-                <h2>Bienvenue </h2>
+                <h2>Bienvenue</h2>
                 <h3>{teamName}</h3>
                 <h4>Le Rituel</h4>
                 <div className='clue-container'>
