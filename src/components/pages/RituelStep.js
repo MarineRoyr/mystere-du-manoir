@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TeamNameContext } from './path/to/your/context'; // Mettez à jour le chemin selon votre structure de projet
+import { TeamNameContext } from '../TeamNameContext'; // Mettez à jour le chemin selon votre structure de projet
 
 const RituelStep = () => {
     // Utilisation du contexte pour récupérer les valeurs
