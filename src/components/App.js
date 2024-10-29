@@ -25,7 +25,6 @@ function App() {
         <p >Avant de plonger dans votre enquête, n'oubliez pas de regarder cette vidéo d'introduction !</p>
         <div className="responsive-iframe-container">
           <iframe
-            loading="lazy"
             title="Vidéo explicative de la première étape"
             src="https://www.canva.com/design/DAGNV6RUHm0/bF9yG_6hMKL9IvBNTkACKw/watch?embed"
             allowFullScreen
