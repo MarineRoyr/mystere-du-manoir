@@ -48,11 +48,11 @@ const UltimateStep = () => {
             <div className='welcome-section'>
                 <h2>Bienvenue </h2>
                 <h3>{teamName}</h3>
+                <h4>Les derniers indices</h4>
                 <div className="clue-container">
                     <div className="responsive-iframe-container">
                         <iframe
-                            loading="lazy"
-                            title="Vidéo explicative de la deuxième étape"
+                            title="Vidéo explicative de la dernière étape"
                             src="https://www.canva.com/design/DAGT2GXjyNE/KVQq9bAD1iE2Gox_R4JNPQ/watch?embed"
                             allowFullScreen
                             allow="fullscreen"
@@ -78,7 +78,7 @@ const UltimateStep = () => {
 
                     <button className="validate-button" onClick={handleValidation} disabled={timeLeft <= 0}>Valider</button>
                     <button className="next-button" onClick={goToNextStep} disabled={!isValid || timeLeft <= 0}>
-                        Indice Suivant
+                        Aller à l'étape suivante
                     </button>
 
                     {/* Bouton pour obtenir un indice en réduisant le score */}

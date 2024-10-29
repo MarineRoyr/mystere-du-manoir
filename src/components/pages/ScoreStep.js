@@ -50,6 +50,26 @@ const Score = () => {
                     <h1 className="score-display" style={{ fontSize: '3rem' }}> Félicitations, aventuriers !  </h1>
 
                     <h2>Vous avez survécu au mystère du manoir, équipe {teamName} !</h2>
+
+                    <div style={{ position: 'relative', width: '100%', height: 0, paddingTop: '56.2500%', paddingBottom: 0, boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)', marginTop: '1.6em', marginBottom: '0.9em', overflow: 'hidden', borderRadius: '8px', willChange: 'transform' }}>
+                        <iframe
+                            title="Vidéo explicative de la septième étape"
+                            style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                top: 0,
+                                left: 0,
+                                border: 'none',
+                                padding: 0,
+                                margin: 0
+                            }}
+                            src="https://www.canva.com/design/DAGUx4Aj6Fo/OUDtgboWJbYZDhwAFEpHMw/watch?embed"
+                            allowFullScreen
+                            allow="fullscreen"
+                        />
+                    </div>
+
                     <p style={{ fontSize: '1.5rem' }}>Votre score final est : <strong>{score}</strong></p>
                     <p style={{ fontSize: '1.2rem' }}>Un grand bravo pour votre détermination et votre esprit d'équipe !</p>
                     <p style={{ fontSize: '1.2rem' }}>Vous avez su relever tous les défis et déverrouiller le mystère du manoir. Votre aventure a été épique et vous méritez d'être félicités !</p>
@@ -57,20 +77,20 @@ const Score = () => {
                 </div>
 
                 {/* Formulaire pour recueillir l'email de l'utilisateur */}
-                <div style={{ marginTop: '20px' }}>
-                    <label htmlFor="userEmail">Votre email :</label>
+                <div style={{ marginTop: '20px', paddingTop: '10px' }}>
+                    <label htmlFor="userEmail">Votre email </label><br />
                     <input
                         type="email"
                         id="userEmail"
                         placeholder="Entrez votre email"
                         value={userEmail}
                         onChange={(e) => setUserEmail(e.target.value)}
-                        style={{ padding: '8px', fontSize: '1rem', margin: '10px 0' }}
+                        style={{ padding: '8px', fontSize: '18px' }}
                     />
                 </div>
                 <div>
                     {/* Bouton pour envoyer l'email */}
-                    <button onClick={sendEmail} style={{ padding: '10px 20px', fontSize: '1rem', marginTop: '20px' }}>
+                    <button onClick={sendEmail} style={{ marginLeft: '10%', padding: '10px 20px', fontSize: '20px' }}>
                         Recevoir votre Score par Email
                     </button></div>
             </div>

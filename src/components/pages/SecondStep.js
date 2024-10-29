@@ -48,10 +48,10 @@ const SecondStep = () => {
             <div className='welcome-section'>
                 <h2>Bienvenue </h2>
                 <h3>{teamName}</h3>
+                <h4>Le Secret des visages oubliés</h4>
                 <div className="clue-container">
                     <div className="responsive-iframe-container">
                         <iframe
-                            loading="lazy"
                             title="Vidéo explicative de la deuxième étape"
                             src="https://www.canva.com/design/DAGTigmsw0Q/ac7Y3CxjJk6Ab2EdNs6zBQ/watch?embed"
                             allowFullScreen
@@ -78,7 +78,7 @@ const SecondStep = () => {
 
                     <button className="validate-button" onClick={handleValidation} disabled={timeLeft <= 0}>Valider</button>
                     <button className="next-button" onClick={goToNextStep} disabled={!isValid || timeLeft <= 0}>
-                        Indice Suivant
+                        Aller à l'étape suivante
                     </button>
 
                     {/* Bouton pour obtenir un indice en réduisant le score */}

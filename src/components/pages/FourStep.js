@@ -47,10 +47,10 @@ const FourStep = () => {
         <div className='step-container'>
             <div className='welcome-section'>
                 <h2>Bienvenue </h2><h3>{teamName}</h3>
+                <h4>Le Souffle du secret</h4>
                 <div className="clue-container">
                     <div className="responsive-iframe-container">
                         <iframe
-                            loading="lazy"
                             title="vidéo explicative 4eme etape"
                             style={{
                                 position: 'absolute',
@@ -85,7 +85,7 @@ const FourStep = () => {
 
                     <button onClick={handleValidation} disabled={timeLeft <= 0}>Valider</button>
                     <button onClick={goToNextStep} disabled={!isValid || timeLeft <= 0}>
-                        Indice Suivant
+                        Aller à l'étape suivante
                     </button>
 
                     {/* Bouton pour obtenir un indice en réduisant le score */}

@@ -48,15 +48,16 @@ const FirstStep = () => {
             <div className="welcome-section">
                 <h2>Bienvenue </h2>
                 <h3>{teamName}</h3>
+                <h4> Au Commencement</h4>
             </div>
 
             {/* Clue Container */}
             <div className="clue-container">
 
+
                 {/* Conteneur de la vidéo avec effet arrondi */}
                 <div className="responsive-iframe-container">
                     <iframe
-                        loading="lazy"
                         title="Vidéo explicative de la première étape"
                         src="https://www.canva.com/design/DAGNWTa9L0k/HktgB8trjriT564GR1jCZA/watch?embed"
                         allowFullScreen
@@ -85,7 +86,7 @@ const FirstStep = () => {
 
                 <button onClick={handleValidation} disabled={timeLeft <= 0}>Valider</button>
                 <button onClick={goToNextStep} disabled={!isValid || timeLeft <= 0}>
-                    Indice Suivant
+                    Aller à l'étape suivante
                 </button>
                 <button onClick={getHint} disabled={timeLeft <= 0}>
                     Obtenir un Indice (-1000 points)

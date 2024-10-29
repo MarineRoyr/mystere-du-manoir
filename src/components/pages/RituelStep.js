@@ -6,7 +6,6 @@ import '../../styles/step.css';
 const RituelStep = () => {
     const { teamName, responses, setIsGameOver } = useContext(TeamNameContext); // Utilisez setIsGameOver ici
     const [inputValue, setInputValue] = useState('');
-    const [isFinalValid, setIsFinalValid] = useState(false); // Pour valider l'entrée finale
     const navigate = useNavigate();
 
     // Mot à deviner pour terminer le jeu
@@ -15,18 +14,10 @@ const RituelStep = () => {
     // Fonction pour gérer la validation de l'indice
     const handleFinalSubmission = () => {
         if (inputValue.trim().toUpperCase() === finalAnswer) {
-            setIsFinalValid(true);
-            setIsGameOver(true); // Utilisez setIsGameOver pour marquer le jeu comme terminé
-            handleScorePage(); // Redirige vers la page des scores après validation
+            setIsGameOver(true); // Marquer le jeu comme terminé
+            navigate('/score-step'); // Redirige directement vers la page des scores
         } else {
             alert('Indice incorrect. Essayez encore!');
-        }
-    };
-
-    // Fonction pour rediriger vers la page des scores
-    const handleScorePage = () => {
-        if (isFinalValid) {
-            navigate('/score-step'); // Naviguer vers la page des scores
         }
     };
 
@@ -35,6 +26,7 @@ const RituelStep = () => {
             <div className='welcome-section'>
                 <h2>Bienvenue </h2>
                 <h3>{teamName}</h3>
+                <h4>Le Rituel</h4>
                 <div className='clue-container'>
                     <p>Le mot à déverrouiller le cryptex que vous trouverez dans le manoir est : <strong>RITUEL</strong>.</p>
                     <p>Utilisez-le pour déverrouiller le cryptex dans le coffre que vous avez trouvé.</p>

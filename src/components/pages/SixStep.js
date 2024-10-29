@@ -48,10 +48,10 @@ const SixStep = () => {
             <div className='welcome-section'>
                 <h2>Bienvenue </h2>
                 <h3>{teamName}</h3>
+                <h4>Les pensées oubliées</h4>
                 <div className="clue-container">
                     <div className="responsive-iframe-container">
                         <iframe
-                            loading="lazy"
                             title="Vidéo explicative de la sixieme étape"
                             style={{
                                 position: 'absolute',
@@ -87,7 +87,7 @@ const SixStep = () => {
 
                     <button onClick={handleValidation} disabled={timeLeft <= 0}>Valider</button>
                     <button onClick={goToNextStep} disabled={!isValid || timeLeft <= 0}>
-                        Indice Suivant
+                        Aller à l'étape suivante
                     </button>
 
                     {/* Bouton pour obtenir un indice en réduisant le score */}

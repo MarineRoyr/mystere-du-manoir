@@ -58,3 +58,13 @@ h1 {
 input {
   border: none;
 }
+
+@media (max-width: 768px) {
+  .App-header {
+    width: 90%;
+  }
+
+  .App p {
+    font-size: 20px;
+  }
+}

@@ -48,10 +48,10 @@ const SevenStep = () => {
             <div className='welcome-section'>
                 <h2>Bienvenue </h2>
                 <h3>{teamName}</h3>
+                <h4>Les fleurs du silence</h4>
                 <div className="clue-container">
                     <div style={{ position: 'relative', width: '100%', height: 0, paddingTop: '56.2500%', paddingBottom: 0, boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)', marginTop: '1.6em', marginBottom: '0.9em', overflow: 'hidden', borderRadius: '8px', willChange: 'transform' }}>
                         <iframe
-                            loading="lazy"
                             title="Vidéo explicative de la septième étape"
                             style={{
                                 position: 'absolute',
@@ -88,7 +88,7 @@ const SevenStep = () => {
 
                     <button onClick={handleValidation} disabled={timeLeft <= 0}>Valider</button>
                     <button onClick={goToNextStep} disabled={!isValid || timeLeft <= 0}>
-                        Indice Suivant
+                        Aller à l'étape suivante
                     </button>
 
                     <button onClick={getHint} disabled={timeLeft <= 0}>
