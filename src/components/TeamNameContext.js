@@ -59,6 +59,16 @@ export const TeamNameProvider = ({ children }) => {
         setTimerId(newTimerId); // Enregistrer l'ID du timer
     };
 
+    const resetLocalStorage = () => {
+        localStorage.clear(); // Effacer tout le stockage local
+        setTeamName(''); // Réinitialiser le nom de l'équipe
+        setScore(50000); // Réinitialiser le score
+        setTimeLeft(90 * 60); // Réinitialiser le temps restant
+        setResponses([]); // Réinitialiser les réponses
+        setInputs({ firststep: '', secondStep: '', thirdStep: '', fourstep: '', fivestep: '', sixstep: '', sevenstep: '', ultimatestep: '', scorestep: '' }); // Réinitialiser les inputs
+        setIsGameOver(false); // Réinitialiser l'état de la fin de jeu
+    };
+
     // Rendre le contexte
     return (
         <TeamNameContext.Provider value={{
@@ -75,7 +85,8 @@ export const TeamNameProvider = ({ children }) => {
             inputs,
             updateInput,
             isGameOver,
-            setIsGameOver
+            setIsGameOver,
+            resetLocalStorage
         }}>
             {children}
         </TeamNameContext.Provider>
