@@ -4,7 +4,15 @@ import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
 
 const ThirdStep = () => {
-    const { teamName, score, setScore, timeLeft, addResponse, responses, inputs, updateInput } = useContext(TeamNameContext);
+    const { teamName,
+        score,
+        setScore,
+        timeLeft,
+        responses,
+        addResponse, // Assurez-vous que cela est ici
+        inputs,
+        updateInput, // Assurez-vous que cela est ici
+    } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();

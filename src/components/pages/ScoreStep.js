@@ -5,7 +5,9 @@ import '../../styles/step.css';
 
 
 const Score = () => {
-    const { teamName, score, setTimeLeft } = useContext(TeamNameContext);
+    const { teamName,
+        score,
+        setTimeLeft } = useContext(TeamNameContext);
     const [userEmail, setUserEmail] = useState(''); // État pour stocker l'email de l'utilisateur
 
     // Arrête le chronomètre lorsque le composant est monté

@@ -4,7 +4,12 @@ import { TeamNameContext } from '../TeamNameContext'; // Mettez à jour le chemi
 
 const RituelStep = () => {
     // Utilisation du contexte pour récupérer les valeurs
-    const { teamName, responses, addResponse, setIsGameOver, inputs, updateInput } = useContext(TeamNameContext);
+    const { teamName,
+        responses,
+        addResponse, // Assurez-vous que cela est ici
+        inputs,
+        updateInput,
+        setIsGameOver } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const navigate = useNavigate();
     const finalAnswer = "UNION";
