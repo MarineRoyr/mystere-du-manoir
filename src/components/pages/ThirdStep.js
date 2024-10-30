@@ -9,9 +9,9 @@ const ThirdStep = () => {
         setScore,
         timeLeft,
         responses,
-        addResponse, // Assurez-vous que cela est ici
+        addResponse,
         inputs,
-        updateInput, // Assurez-vous que cela est ici
+        updateInput // Assurez-vous que cela est ici
     } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');
     const [isValid, setIsValid] = useState(false);

@@ -12,10 +12,10 @@ const SecondStep = () => {
         setScore,
         timeLeft,
         responses,
-        addResponse, // Assurez-vous que cela est ici
+        addResponse,
         inputs,
-        updateInput, // Assurez-vous que cela est ici
-        isGameOver,
+        updateInput,
+        isGameOver
     } = useContext(TeamNameContext);
 
     const [inputValue, setInputValue] = useState('');

@@ -9,7 +9,7 @@ const FourStep = () => {
         setScore,
         timeLeft,
         responses,
-        addResponse, // Assurez-vous que cela est ici
+        addResponse,
         inputs,
         updateInput
     } = useContext(TeamNameContext);

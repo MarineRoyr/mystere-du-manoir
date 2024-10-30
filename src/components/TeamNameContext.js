@@ -6,19 +6,23 @@ export const TeamNameContext = createContext();
 // Le fournisseur de contexte pour encapsuler l'application
 export const TeamNameProvider = ({ children }) => {
     const [teamName, setTeamName] = useState(localStorage.getItem('teamName') || '');
+
     const [score, setScore] = useState(() => {
         const storedScore = localStorage.getItem('score');
         return storedScore ? parseInt(storedScore) : 50000;
     });
+
     const [timeLeft, setTimeLeft] = useState(() => {
         const storedTime = localStorage.getItem('timeLeft');
-        return storedTime ? parseInt(storedTime) : 90 * 60;
+        return storedTime ? parseInt(storedTime) : 90 * 60; // 90 minutes in seconds
     });
+
     const [timerId, setTimerId] = useState(null);
     const [responses, setResponses] = useState(() => {
         const storedResponses = JSON.parse(localStorage.getItem('responses')) || [];
         return [...new Set(storedResponses)];
     });
+
     const [inputs, setInputs] = useState(() => {
         const storedInputs = JSON.parse(localStorage.getItem('inputs')) || {
             firstStep: '',
@@ -33,6 +37,7 @@ export const TeamNameProvider = ({ children }) => {
         };
         return storedInputs;
     });
+
     const [isGameOver, setIsGameOver] = useState(false);
     const [isResetting, setIsResetting] = useState(false); // État pour suivre la réinitialisation
 
@@ -59,7 +64,7 @@ export const TeamNameProvider = ({ children }) => {
         const newTimerId = setInterval(() => {
             setTimeLeft((prevTime) => {
                 const newTime = prevTime - 1;
-                // Vérifiez si 10 minutes (600 secondes) se sont écoulées
+
                 if (prevTime % 600 === 1 && prevTime > 0) {
                     setScore((prevScore) => Math.max(prevScore - 500, 0)); // Réduit le score de 500, ne descend pas en dessous de 0
                 }
@@ -93,7 +98,7 @@ export const TeamNameProvider = ({ children }) => {
             sixStep: '',
             sevenStep: '',
             ultimateStep: '',
-            scoreStep: ''
+            scoreStep: '',
         });
         setIsGameOver(false);
 
@@ -118,7 +123,7 @@ export const TeamNameProvider = ({ children }) => {
                 clearInterval(timerId); // Nettoie l'intervalle si le composant est démonté
             }
         };
-    }, [timeLeft, timerId, isResetting, startTimer]); // Ajoutez isResetting ici
+    }, [timeLeft, timerId, isResetting, startTimer]);
 
     // Mettre à jour localStorage chaque fois que `teamName`, `score`, `timeLeft`, `responses`, ou `inputs` changent
     useEffect(() => {
@@ -140,9 +145,9 @@ export const TeamNameProvider = ({ children }) => {
             setTimeLeft,
             startTimer,
             responses,
-            addResponse, // Assurez-vous que cela est ici
+            addResponse,
             inputs,
-            updateInput, // Assurez-vous que cela est ici
+            updateInput,
             isGameOver,
             setIsGameOver,
             resetLocalStorage

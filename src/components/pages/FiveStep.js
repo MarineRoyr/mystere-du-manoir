@@ -9,7 +9,7 @@ const FiveStep = () => {
         setScore,
         timeLeft,
         responses,
-        addResponse, // Assurez-vous que cela est ici
+        addResponse,
         inputs,
         updateInput } = useContext(TeamNameContext);
     const [inputValue, setInputValue] = useState('');

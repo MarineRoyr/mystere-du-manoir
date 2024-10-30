@@ -6,7 +6,7 @@ const RituelStep = () => {
     // Utilisation du contexte pour récupérer les valeurs
     const { teamName,
         responses,
-        addResponse, // Assurez-vous que cela est ici
+        addResponse,
         inputs,
         updateInput,
         setIsGameOver } = useContext(TeamNameContext);

@@ -11,10 +11,10 @@ const FirstStep = () => {
         timeLeft,
         startTimer,
         responses,
-        addResponse, // Assurez-vous que cela est ici
+        addResponse,
         inputs,
-        updateInput, // Assurez-vous que cela est ici
-        isGameOver,
+        updateInput,
+        isGameOver
     } = useContext(TeamNameContext);
 
     const [inputValue, setInputValue] = useState(inputs.firstStep || ''); // Initialiser avec la valeur existante
