@@ -74,7 +74,7 @@ export const TeamNameProvider = ({ children }) => {
 
     // Fonction pour démarrer le chronomètre
     const startTimer = () => {
-        if (timerId) return; // Ne pas démarrer un nouveau timer si déjà en cours
+        if (timerId || timeLeft <= 0) return; // Ne pas démarrer un nouveau timer si déjà en cours ou si le temps est écoulé
 
         const newTimerId = setInterval(() => {
             setTimeLeft((prevTime) => {
@@ -118,14 +118,19 @@ export const TeamNameProvider = ({ children }) => {
         }
     };
 
-    // Nettoyage du timer si le composant est démonté ou si le jeu se termine
+    // Démarrer le timer lorsque le composant est monté et que `timeLeft` est supérieur à 0
     useEffect(() => {
+        if (timeLeft > 0) {
+            startTimer();
+        }
+
+        // Nettoyage du timer si le composant est démonté ou si le jeu se termine
         return () => {
             if (timerId) {
                 clearInterval(timerId);
             }
         };
-    }, [timerId]);
+    }, [timeLeft]); // Ajouter `timeLeft` comme dépendance
 
     // Rendre le contexte
     return (
