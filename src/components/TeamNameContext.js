@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext, useEffect, useCallback } from 'react';
 
 // Créez le contexte pour le nom de l'équipe et d'autres états
 export const TeamNameContext = createContext();
@@ -73,7 +73,7 @@ export const TeamNameProvider = ({ children }) => {
     };
 
     // Fonction pour démarrer le chronomètre
-    const startTimer = () => {
+    const startTimer = useCallback(() => {
         if (timerId || timeLeft <= 0) return; // Ne pas démarrer un nouveau timer si déjà en cours ou si le temps est écoulé
 
         const newTimerId = setInterval(() => {
@@ -91,7 +91,22 @@ export const TeamNameProvider = ({ children }) => {
         }, 1000); // Timer de 1 seconde
 
         setTimerId(newTimerId); // Enregistrer l'ID du timer
-    };
+    }, [timerId, timeLeft]); // `timerId` et `timeLeft` comme dépendances
+
+    // Démarrer le timer lorsque le composant est monté et que `timeLeft` est supérieur à 0
+    useEffect(() => {
+        if (timeLeft > 0) {
+            startTimer();
+        }
+
+        // Nettoyage du timer si le composant est démonté ou si le jeu se termine
+        return () => {
+            if (timerId) {
+                clearInterval(timerId);
+                setTimerId(null); // Réinitialiser l'ID du timer
+            }
+        };
+    }, [startTimer, timeLeft, timerId]); // Ajoutez `startTimer` comme dépendance
 
     // Fonction pour réinitialiser le local storage et l'état
     const resetLocalStorage = () => {
@@ -117,20 +132,6 @@ export const TeamNameProvider = ({ children }) => {
             setTimerId(null);
         }
     };
-
-    // Démarrer le timer lorsque le composant est monté et que `timeLeft` est supérieur à 0
-    useEffect(() => {
-        if (timeLeft > 0) {
-            startTimer();
-        }
-
-        // Nettoyage du timer si le composant est démonté ou si le jeu se termine
-        return () => {
-            if (timerId) {
-                clearInterval(timerId);
-            }
-        };
-    }, [timeLeft]); // Ajouter `timeLeft` comme dépendance
 
     // Rendre le contexte
     return (
