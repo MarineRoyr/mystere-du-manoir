@@ -6,7 +6,6 @@ export const TeamNameContext = createContext();
 // Le fournisseur de contexte pour encapsuler l'application
 export const TeamNameProvider = ({ children }) => {
     const [teamName, setTeamName] = useState(localStorage.getItem('teamName') || '');
-
     const [score, setScore] = useState(() => {
         const storedScore = localStorage.getItem('score');
         return storedScore ? parseInt(storedScore) : 50000;
@@ -65,9 +64,11 @@ export const TeamNameProvider = ({ children }) => {
             setTimeLeft((prevTime) => {
                 const newTime = prevTime - 1;
 
+                // Réduit le score de 500 toutes les 10 minutes
                 if (prevTime % 600 === 1 && prevTime > 0) {
-                    setScore((prevScore) => Math.max(prevScore - 500, 0)); // Réduit le score de 500, ne descend pas en dessous de 0
+                    setScore((prevScore) => Math.max(prevScore - 500, 0)); // Réduit le score de 500
                 }
+
                 if (newTime <= 0) {
                     clearInterval(newTimerId);
                     setTimerId(null);
@@ -75,6 +76,7 @@ export const TeamNameProvider = ({ children }) => {
                     alert("Temps écoulé !");
                     return 0;
                 }
+
                 return newTime;
             });
         }, 1000); // Timer de 1 seconde
@@ -102,7 +104,7 @@ export const TeamNameProvider = ({ children }) => {
         });
         setIsGameOver(false);
 
-        // Ne pas redémarrer le timer ici
+        // Arrêter le timer si en cours
         if (timerId) {
             clearInterval(timerId);
             setTimerId(null); // Stopper le timer
@@ -133,6 +135,18 @@ export const TeamNameProvider = ({ children }) => {
         localStorage.setItem('responses', JSON.stringify(responses));
         localStorage.setItem('inputs', JSON.stringify(inputs));
     }, [teamName, score, timeLeft, responses, inputs]);
+
+    // Synchroniser le timeLeft avec localStorage lors du chargement
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            localStorage.setItem('timeLeft', timeLeft);
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [timeLeft]);
 
     // Rendre le contexte
     return (
