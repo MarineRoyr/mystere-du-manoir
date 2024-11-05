@@ -2,12 +2,12 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
+import Timer from '../Timer'
 
 const SevenStep = () => {
     const { teamName,
         score,
         setScore,
-        timeLeft,
         responses,
         addResponse,
         inputs,
@@ -82,7 +82,7 @@ const SevenStep = () => {
 
                     <div className="bottom-content">
                         <h3 className="score">Score: {score}</h3>
-                        <h3 className="chrono-display">Temps restant: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}</h3>
+                        <div className="chrono-display"><Timer/></div>
 
                     </div>
 
@@ -94,15 +94,14 @@ const SevenStep = () => {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         placeholder="Entrez l'indice ici"
-                        disabled={timeLeft <= 0}
                     />
 
-                    <button onClick={handleValidation} disabled={timeLeft <= 0}>Valider</button>
-                    <button onClick={goToNextStep} disabled={!isValid || timeLeft <= 0}>
+                    <button onClick={handleValidation} >Valider</button>
+                    <button onClick={goToNextStep} disabled={!isValid }>
                         Aller à l'étape suivante
                     </button>
 
-                    <button onClick={getHint} disabled={timeLeft <= 0}>
+                    <button onClick={getHint} >
                         Obtenir un Indice (-1000 points)
                     </button>
 

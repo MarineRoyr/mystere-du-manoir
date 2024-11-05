@@ -7,7 +7,7 @@ const Footer = () => {
         <footer>
             <div className='footer-container'>
 
-                <p>Hébergé par Netlify - Edité par SNC Gîtes et Couvert des Lacs</p>
+                <p>Hébergé par Netlify - Edité par SARL Dom Traiteur, Saveurs et Gourmandises</p>
 
             </div>
 

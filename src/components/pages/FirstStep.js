@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
+import TimerDisplay from '../TimerDisplay'; // Importer le nouveau composant TimerDisplay
 import '../../styles/step.css';
 
 const FirstStep = () => {
@@ -8,16 +9,13 @@ const FirstStep = () => {
         teamName,
         score,
         setScore,
-        timeLeft,
-        startTimer,
         responses,
         addResponse,
         inputs,
         updateInput,
-        isGameOver
     } = useContext(TeamNameContext);
 
-    const [inputValue, setInputValue] = useState(inputs.firstStep || ''); // Initialiser avec la valeur existante
+    const [inputValue, setInputValue] = useState(inputs.firstStep || '');
     const [isValid, setIsValid] = useState(false);
     const navigate = useNavigate();
 
@@ -78,23 +76,12 @@ const FirstStep = () => {
                     ></iframe>
                 </div>
 
-                {/* Affichage du score et du chronomètre */}
+                {/* Affichage du score */}
                 <div className="bottom-content">
                     <h3 className="score">Score: {score}</h3>
 
-                    {/* Bouton pour démarrer le chronomètre */}
-                    <button
-                        className="chrono"
-                        onClick={startTimer}
-                        disabled={isGameOver} // Désactiver si le chronomètre est déjà en cours ou si le jeu est terminé
-                    >
-                        Démarrer le Chronomètre
-                    </button>
-
-                    {/* Affichage du temps restant */}
-                    <h3 className="chrono-display">
-                        Temps restant: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
-                    </h3>
+                    {/* Intégration du composant TimerDisplay */}
+                    <TimerDisplay />
                 </div>
 
                 {/* Instructions pour l'utilisateur */}
@@ -110,15 +97,15 @@ const FirstStep = () => {
                         updateInput('firstStep', e.target.value); // Mettre à jour l'input dans le contexte
                     }}
                     placeholder="Entrez l'indice ici"
-                    disabled={timeLeft <= 0} // Désactiver si le temps est écoulé
+                    disabled={false} // Toujours actif, le chrono est géré par TimerDisplay
                 />
 
                 {/* Boutons d'actions */}
-                <button onClick={handleValidation} disabled={timeLeft <= 0}>Valider</button>
-                <button onClick={goToNextStep} disabled={!isValid || timeLeft <= 0}>
+                <button onClick={handleValidation}>Valider</button>
+                <button onClick={goToNextStep} disabled={!isValid}>
                     Aller à l'étape suivante
                 </button>
-                <button onClick={getHint} disabled={score < 1000 || timeLeft <= 0}>
+                <button onClick={getHint} disabled={score < 1000}>
                     Obtenir un Indice (-1000 points)
                 </button>
             </div>

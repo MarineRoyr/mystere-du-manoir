@@ -7,7 +7,8 @@ function App() {
   // Extraction des valeurs nécessaires depuis le contexte
   const {
     setTeamName,
-    resetLocalStorage } = useContext(TeamNameContext); // Utilisation de `useContext` pour récupérer setTeamName et resetLocalStorage
+    resetLocalStorage,
+  } = useContext(TeamNameContext); // Utilisation de `useContext` pour récupérer setTeamName et resetLocalStorage
   const [input, setInput] = useState(''); // État pour capturer le nom de l'équipe
   const navigate = useNavigate(); // Hook pour la navigation
 
@@ -20,6 +21,11 @@ function App() {
     }
     setTeamName(input); // Mettre à jour le nom de l'équipe dans le contexte
     navigate('/first-step'); // Naviguer vers la première étape
+  };
+
+  // Fonction pour réinitialiser la session
+  const handleResetSession = () => {
+    resetLocalStorage(); // Appel de la fonction de réinitialisation
   };
 
   return (
@@ -51,7 +57,7 @@ function App() {
           </form>
 
           {/* Bouton pour remettre à zéro le local storage */}
-          <button onClick={resetLocalStorage} style={{ marginTop: '20px' }}>
+          <button onClick={handleResetSession} style={{ marginTop: '20px' }}>
             Réinitialiser la session A ZERO
           </button>
         </div>

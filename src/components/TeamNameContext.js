@@ -1,20 +1,13 @@
-import React, { useState, createContext, useEffect, useCallback } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 
-// Créez le contexte pour le nom de l'équipe et d'autres états
 export const TeamNameContext = createContext();
 
-// Le fournisseur de contexte pour encapsuler l'application
 export const TeamNameProvider = ({ children }) => {
     const [teamName, setTeamName] = useState(localStorage.getItem('teamName') || '');
     const [score, setScore] = useState(() => {
         const storedScore = localStorage.getItem('score');
         return storedScore ? parseInt(storedScore) : 50000;
     });
-    const [timeLeft, setTimeLeft] = useState(() => {
-        const storedTime = localStorage.getItem('timeLeft');
-        return storedTime ? parseInt(storedTime) : 90 * 60;
-    });
-    const [timerId, setTimerId] = useState(null);
     const [responses, setResponses] = useState(() => {
         const storedResponses = JSON.parse(localStorage.getItem('responses')) || [];
         return [...new Set(storedResponses)];
@@ -35,85 +28,38 @@ export const TeamNameProvider = ({ children }) => {
     });
     const [isGameOver, setIsGameOver] = useState(false);
 
-    // Mettre à jour localStorage chaque fois que `teamName`, `score`, `timeLeft`, `responses`, ou `inputs` changent
-    useEffect(() => {
-        localStorage.setItem('teamName', teamName);
-    }, [teamName]);
-
-    useEffect(() => {
-        localStorage.setItem('score', score);
-    }, [score]);
-
-    useEffect(() => {
-        localStorage.setItem('timeLeft', timeLeft);
-    }, [timeLeft]);
-
-    useEffect(() => {
-        localStorage.setItem('responses', JSON.stringify(responses));
-    }, [responses]);
-
-    useEffect(() => {
-        localStorage.setItem('inputs', JSON.stringify(inputs));
-    }, [inputs]);
-
-    // Fonction pour ajouter une réponse et éviter les doublons
-    const addResponse = (response) => {
-        setResponses((prevResponses) => {
-            const newResponses = [...new Set([...prevResponses, response])];
-            return newResponses;
-        });
+    // Fonction pour mettre à jour le score dans le localStorage
+    const updateScoreInLocalStorage = (newScore) => {
+        setScore(newScore);
+        localStorage.setItem('score', newScore);
     };
 
-    // Fonction pour mettre à jour les inputs
-    const updateInput = (step, value) => {
-        setInputs((prevInputs) => ({
-            ...prevInputs,
-            [step]: value,
-        }));
+    // Fonction pour marquer la fin du jeu
+    const markGameOver = () => {
+        setIsGameOver(true);
+        alert("Le jeu est terminé !");
     };
 
-    // Fonction pour démarrer le chronomètre
-    const startTimer = useCallback(() => {
-        if (timerId || timeLeft <= 0) return; // Ne pas démarrer un nouveau timer si déjà en cours ou si le temps est écoulé
 
-        const newTimerId = setInterval(() => {
-            setTimeLeft((prevTime) => {
-                const newTime = prevTime - 1;
-                if (newTime <= 0) {
-                    clearInterval(newTimerId);
-                    setTimerId(null);
-                    setIsGameOver(true);
-                    alert("Temps écoulé !");
-                    return 0;
-                }
-                return newTime;
-            });
-        }, 1000); // Timer de 1 seconde
-
-        setTimerId(newTimerId); // Enregistrer l'ID du timer
-    }, [timerId, timeLeft]); // `timerId` et `timeLeft` comme dépendances
-
-    // Démarrer le timer lorsque le composant est monté et que `timeLeft` est supérieur à 0
     useEffect(() => {
-        if (timeLeft > 0) {
-            startTimer();
+        if (isGameOver) {
+            updateScoreInLocalStorage(0);
         }
+    }, [isGameOver]);
 
-        // Nettoyage du timer si le composant est démonté ou si le jeu se termine
-        return () => {
-            if (timerId) {
-                clearInterval(timerId);
-                setTimerId(null); // Réinitialiser l'ID du timer
-            }
-        };
-    }, [startTimer, timeLeft, timerId]); // Ajoutez `startTimer` comme dépendance
+    useEffect(() => {
+        if (!isGameOver) {
+            const interval = setInterval(() => {
+                updateScoreInLocalStorage(Math.max(score - 500, 0));
+            }, 10 * 60 * 1000);
+            return () => clearInterval(interval);
+        }
+    }, [score, isGameOver]);
 
-    // Fonction pour réinitialiser le local storage et l'état
     const resetLocalStorage = () => {
-        localStorage.clear(); // Effacer tout le stockage local
+        localStorage.clear();
         setTeamName('');
-        setScore(50000);
-        setTimeLeft(90 * 60);
+        updateScoreInLocalStorage(50000); // Utilisez la fonction pour mettre à jour le score
         setResponses([]);
         setInputs({
             firstStep: '',
@@ -127,29 +73,38 @@ export const TeamNameProvider = ({ children }) => {
             scoreStep: ''
         });
         setIsGameOver(false);
-        if (timerId) {
-            clearInterval(timerId);
-            setTimerId(null);
-        }
+        alert('La session de jeu est réinitialisée');
     };
 
-    // Rendre le contexte
+    useEffect(() => {
+        // Réduire le score toutes les 10 minutes
+        const interval = setInterval(() => {
+            const newScore = Math.max(score - 500, 0); // Ne pas permettre de descendre en dessous de 0
+            updateScoreInLocalStorage(newScore);
+        }, 10 * 60 * 1000); // 10 minutes
+
+        return () => clearInterval(interval); // Nettoyer l'intervalle à la désinstallation du composant
+    }, [score]); // Ajoutez score comme dépendance
+
     return (
         <TeamNameContext.Provider value={{
             teamName,
             setTeamName,
             score,
-            setScore,
-            timeLeft,
-            setTimeLeft,
-            startTimer,
+            setScore: updateScoreInLocalStorage,
             responses,
-            addResponse,
+            addResponse: (response) => {
+                setResponses((prevResponses) => [...new Set([...prevResponses, response])]);
+                localStorage.setItem('responses', JSON.stringify([...new Set([...responses, response])]));
+            },
             inputs,
-            updateInput,
+            updateInput: (step, value) => {
+                setInputs((prevInputs) => ({ ...prevInputs, [step]: value }));
+                localStorage.setItem('inputs', JSON.stringify({ ...inputs, [step]: value }));
+            },
             isGameOver,
-            setIsGameOver,
-            resetLocalStorage
+            markGameOver, // Exposez la fonction pour marquer la fin du jeu
+            resetLocalStorage,
         }}>
             {children}
         </TeamNameContext.Provider>

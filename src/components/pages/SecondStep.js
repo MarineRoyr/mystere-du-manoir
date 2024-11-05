@@ -1,21 +1,18 @@
-// SecondStep.js
-
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
+import Timer from '../Timer';
 
 const SecondStep = () => {
     const {
         teamName,
         score,
         setScore,
-        timeLeft,
         responses,
         addResponse,
         inputs,
-        updateInput,
-        isGameOver
+        updateInput
     } = useContext(TeamNameContext);
 
     const [inputValue, setInputValue] = useState('');
@@ -73,9 +70,9 @@ const SecondStep = () => {
 
                     <div className="bottom-content">
                         <h3 className="score">Score: {score}</h3>
-                        <h3 className="chrono-display">
-                            Temps restant: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
-                        </h3>
+                        <div className="chrono-display">
+                            <Timer /> {/* Timer sans interaction avec l'état du bouton */}
+                        </div>
                     </div>
 
                     <p>Entrez l'indice pour débloquer l'étape suivante :</p>
@@ -87,12 +84,11 @@ const SecondStep = () => {
                             updateInput('secondStep', e.target.value);
                         }}
                         placeholder="Entrez l'indice ici"
-                        disabled={isGameOver}
                     />
 
-                    <button onClick={handleValidation} disabled={isGameOver}>Valider</button>
-                    <button onClick={goToNextStep} disabled={!isValid || isGameOver}>Aller à l'étape suivante</button>
-                    <button onClick={getHint} disabled={score < 1000 || isGameOver}>Obtenir un Indice (-1000 points)</button>
+                    <button onClick={handleValidation}>Valider</button>
+                    <button onClick={goToNextStep} >Aller à l'étape suivante</button>
+                    <button onClick={getHint} disabled={score < 1000 }>Obtenir un Indice (-1000 points)</button>
                 </div>
             </div>
 

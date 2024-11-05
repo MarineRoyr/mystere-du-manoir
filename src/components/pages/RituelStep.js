@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TeamNameContext } from '../TeamNameContext'; // Mettez à jour le chemin selon votre structure de projet
+import { TeamNameContext } from '../TeamNameContext'; 
+import Timer from '../Timer';
 
 const RituelStep = () => {
-    // Utilisation du contexte pour récupérer les valeurs
-    const { teamName,
+    const { 
+        teamName,
         responses,
         addResponse,
         inputs,
         updateInput,
-        setIsGameOver } = useContext(TeamNameContext);
+        markGameOver // Utilisez la fonction pour marquer la fin du jeu
+    } = useContext(TeamNameContext);
+    
     const [inputValue, setInputValue] = useState('');
     const navigate = useNavigate();
     const finalAnswer = "UNION";
@@ -24,9 +27,9 @@ const RituelStep = () => {
     // Gestion de la soumission finale
     const handleFinalSubmission = () => {
         if (inputValue.trim().toUpperCase() === finalAnswer) {
-            setIsGameOver(true);
-            navigate('/score-step');
+            markGameOver(); // Appeler cette fonction pour marquer le jeu comme terminé
             updateInput('rituelStep', inputValue.trim());
+            navigate('/score-step');
         } else {
             alert('Indice incorrect. Essayez encore!');
         }
@@ -35,8 +38,8 @@ const RituelStep = () => {
     // Gestion de l'ajout de réponse
     const handleAddResponse = () => {
         if (inputValue.trim()) {
-            addResponse(inputValue); // Ajoute la réponse au contexte
-            setInputValue(''); // Réinitialiser l'input
+            addResponse(inputValue);
+            setInputValue('');
         } else {
             alert('Veuillez entrer un indice valide.');
         }
@@ -48,6 +51,7 @@ const RituelStep = () => {
                 <h2>Bienvenue</h2>
                 <h3>{teamName}</h3>
                 <h4>Le Rituel</h4>
+                <div className='chrono-display'><Timer/></div>
                 <div className='clue-container'>
                     <p>Le mot à déverrouiller le cryptex que vous trouverez dans le manoir est : <strong>RITUEL</strong>.</p>
                     <p>Utilisez-le pour déverrouiller le cryptex dans le coffre que vous avez trouvé.</p>

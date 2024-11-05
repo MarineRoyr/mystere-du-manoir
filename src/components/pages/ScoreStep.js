@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import emailjs from 'emailjs-com';
 import { TeamNameContext } from '../TeamNameContext';
 import '../../styles/step.css';
@@ -6,14 +6,10 @@ import '../../styles/step.css';
 
 const Score = () => {
     const { teamName,
-        score,
-        setTimeLeft } = useContext(TeamNameContext);
+        score} = useContext(TeamNameContext);
     const [userEmail, setUserEmail] = useState(''); // État pour stocker l'email de l'utilisateur
 
-    // Arrête le chronomètre lorsque le composant est monté
-    useEffect(() => {
-        setTimeLeft(0);
-    }, [setTimeLeft]);
+
 
     // Fonction pour envoyer un email via EmailJS
     const sendEmail = () => {
