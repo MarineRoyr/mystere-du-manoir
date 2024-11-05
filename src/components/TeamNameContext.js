@@ -41,11 +41,7 @@ export const TeamNameProvider = ({ children }) => {
     };
 
 
-    useEffect(() => {
-        if (isGameOver) {
-            updateScoreInLocalStorage(0);
-        }
-    }, [isGameOver]);
+
 
     useEffect(() => {
         if (!isGameOver) {
