@@ -44,6 +44,11 @@ const SevenStep = () => {
         }
     };
 
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+    const handleTimerComplete = () => {
+        setIsButtonDisabled(true);  // Désactive le bouton lorsque le timer est terminé
+    };
+
     // Fonction pour obtenir un indice
     const getHint = () => {
         if (score >= 1000) {
@@ -82,7 +87,7 @@ const SevenStep = () => {
 
                     <div className="bottom-content">
                         <h3 className="score">Score: {score}</h3>
-                        <div className="chrono-display"><Timer/></div>
+                        <div className="chrono-display"><Timer onTimerComplete={handleTimerComplete}/></div>
 
                     </div>
 
@@ -97,7 +102,7 @@ const SevenStep = () => {
                     />
 
                     <button onClick={handleValidation} >Valider</button>
-                    <button onClick={goToNextStep} disabled={!isValid }>
+                    <button onClick={goToNextStep} disabled={!isValid ||isButtonDisabled}>
                         Aller à l'étape suivante
                     </button>
 

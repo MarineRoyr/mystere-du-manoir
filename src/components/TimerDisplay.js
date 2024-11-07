@@ -2,11 +2,14 @@ import React, { useEffect, useState, useContext } from 'react';
 import { TeamNameContext } from './TeamNameContext'; // Importez votre contexte
 
 const TimerDisplay = () => {
-    const { score, setScore } = useContext(TeamNameContext); // Accédez au score et à la fonction de mise à jour
+    const { score, setScore } = useContext(TeamNameContext); // Accédez au score en temps réel
     const [expiryTimestamp, setExpiryTimestamp] = useState(() => {
         const storedExpiryTimestamp = localStorage.getItem('expiryTimestamp');
-        return storedExpiryTimestamp ? new Date(storedExpiryTimestamp) : new Date(Date.now() + 90 * 60 * 1000); // 90 minutes par défaut
+        // Si un timestamp est stocké, assurez-vous qu'il est valide, sinon définissez-le à 90 minutes par défaut
+        const parsedTimestamp = storedExpiryTimestamp ? new Date(storedExpiryTimestamp) : new Date(Date.now() + 90 * 60 * 1000);
+        return parsedTimestamp instanceof Date && !isNaN(parsedTimestamp) ? parsedTimestamp : new Date(Date.now() + 90 * 60 * 1000); // Validation de la date
     });
+
     const [isTimerRunning, setIsTimerRunning] = useState(() => localStorage.getItem('isTimerRunning') === 'true');
     const [timeRemaining, setTimeRemaining] = useState(expiryTimestamp - new Date());
 
@@ -52,13 +55,13 @@ const TimerDisplay = () => {
                     handleTimerComplete();
                     clearInterval(interval); // Arrêter le timer
                 } else {
-                    setTimeRemaining(remaining);
+                    setTimeRemaining(remaining); // Met à jour le temps restant
                 }
             }
-        }, 1000); // Met à jour chaque seconde
+        }, 1000); // Mise à jour chaque seconde
 
-        return () => clearInterval(interval); // Nettoyage de l'intervalle
-    }, [isTimerRunning, expiryTimestamp]);
+        return () => clearInterval(interval); // Nettoyage de l'intervalle à la désinstallation du composant
+    }, [isTimerRunning, expiryTimestamp]); // L'effet dépend de l'état du timer et de l'expiryTimestamp
 
     // Utiliser un effet pour réduire le score toutes les 10 minutes
     useEffect(() => {

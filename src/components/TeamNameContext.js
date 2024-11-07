@@ -27,11 +27,23 @@ export const TeamNameProvider = ({ children }) => {
         return storedInputs;
     });
     const [isGameOver, setIsGameOver] = useState(false);
+    const [isTimerComplete, setIsTimerComplete] = useState(false); // Nouvel état pour vérifier si le timer est terminé
+
+    // Vérifie si le temps est écoulé au chargement
+    useEffect(() => {
+        const storedExpiryTimestamp = localStorage.getItem('expiryTimestamp');
+        if (storedExpiryTimestamp) {
+            const isExpired = new Date() > new Date(storedExpiryTimestamp);
+            setIsTimerComplete(isExpired);
+        }
+    }, []);
 
     // Met à jour le score dans le localStorage
     useEffect(() => {
         localStorage.setItem('score', score); // Assurez-vous que le score est sauvegardé en localStorage
     }, [score]);
+
+   
 
     // Fonction pour marquer la fin du jeu
     const markGameOver = () => {
@@ -56,6 +68,7 @@ export const TeamNameProvider = ({ children }) => {
             scoreStep: ''
         });
         setIsGameOver(false);
+        setIsTimerComplete(false); // Réinitialise l'état du timer
         alert('La session de jeu est réinitialisée');
     };
 
@@ -77,6 +90,7 @@ export const TeamNameProvider = ({ children }) => {
             },
             isGameOver,
             markGameOver,
+            isTimerComplete, // Expose l'état du timer pour les autres composants
             resetLocalStorage,
         }}>
             {children}

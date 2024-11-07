@@ -13,6 +13,7 @@ const FirstStep = () => {
         addResponse,
         inputs,
         updateInput,
+        isTimerComplete
     } = useContext(TeamNameContext);
 
     const [inputValue, setInputValue] = useState(inputs.firstStep || '');
@@ -102,7 +103,7 @@ const FirstStep = () => {
 
                 {/* Boutons d'actions */}
                 <button onClick={handleValidation}>Valider</button>
-                <button onClick={goToNextStep} disabled={!isValid}>
+                <button onClick={goToNextStep} disabled={!isValid || isTimerComplete}>
                     Aller à l'étape suivante
                 </button>
                 <button onClick={getHint} disabled={score < 1000}>

@@ -26,6 +26,7 @@ const SecondStep = () => {
         setInputValue(inputs.secondStep);
     }, [inputs.secondStep]);
 
+
     const handleValidation = () => {
         if (validAnswers.includes(inputValue.trim())) {
             setIsValid(true);
@@ -42,6 +43,12 @@ const SecondStep = () => {
             navigate('/third-step');
         }
     };
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+    const handleTimerComplete = () => {
+        setIsButtonDisabled(true);  // Désactive le bouton lorsque le timer est terminé
+    };
+
 
     const getHint = () => {
         if (score >= 1000) {
@@ -71,7 +78,7 @@ const SecondStep = () => {
                     <div className="bottom-content">
                         <h3 className="score">Score: {score}</h3>
                         <div className="chrono-display">
-                            <Timer /> {/* Timer sans interaction avec l'état du bouton */}
+                            <Timer  onTimerComplete={handleTimerComplete}  /> {/* Timer sans interaction avec l'état du bouton */}
                         </div>
                     </div>
 
@@ -87,7 +94,7 @@ const SecondStep = () => {
                     />
 
                     <button onClick={handleValidation}>Valider</button>
-                    <button onClick={goToNextStep} disabled={!isValid} >Aller à l'étape suivante</button>
+                    <button onClick={goToNextStep} disabled={!isValid ||isButtonDisabled} >Aller à l'étape suivante</button>
                     <button onClick={getHint} disabled={score < 1000 }>Obtenir un Indice (-1000 points)</button>
                 </div>
             </div>

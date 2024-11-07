@@ -35,6 +35,12 @@ const RituelStep = () => {
         }
     };
 
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+    const handleTimerComplete = () => {
+        setIsButtonDisabled(true);  // Désactive le bouton lorsque le timer est terminé
+    };
+
+
     // Gestion de l'ajout de réponse
     const handleAddResponse = () => {
         if (inputValue.trim()) {
@@ -51,7 +57,7 @@ const RituelStep = () => {
                 <h2>Bienvenue</h2>
                 <h3>{teamName}</h3>
                 <h4>Le Rituel</h4>
-                <div className='chrono-display'><Timer/></div>
+                <div className='chrono-display'><Timer onTimerComplete={handleTimerComplete} /></div>
                 <div className='clue-container'>
                     <p>Le mot à déverrouiller le cryptex que vous trouverez dans le manoir est : <strong>RITUEL</strong>.</p>
                     <p>Utilisez-le pour déverrouiller le cryptex dans le coffre que vous avez trouvé.</p>
@@ -62,7 +68,7 @@ const RituelStep = () => {
                         onChange={(e) => setInputValue(e.target.value)}
                         placeholder="Entrez l'indice ici"
                     />
-                    <button className="finalize-button" onClick={handleFinalSubmission}>
+                    <button className="finalize-button" onClick={handleFinalSubmission} disabled={isButtonDisabled}>
                         Libérons ensemble le manoir grâce au mot clé du cryptex
                     </button>
                     <button className="add-response-button" onClick={handleAddResponse}>
