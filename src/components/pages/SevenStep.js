@@ -87,7 +87,7 @@ const SevenStep = () => {
                     </div>
 
                     <p>Entrez l'indice pour débloquer l'étape suivante :</p>
-                    <label htmlFor="input-hint">Indice :</label>
+                    <label htmlFor="input-hint"></label>
                     <input
                         id="input-hint"
                         type="text"
@@ -108,7 +108,7 @@ const SevenStep = () => {
                 </div></div>
 
             <div className="responses-container">
-                <h3>Réponses Sevennies :</h3>
+                <h3>Boîte à indices</h3>
                 <ul>
                     {responses.map((response, index) => (
                         <li key={index}>{response}</li>

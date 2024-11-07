@@ -97,7 +97,7 @@ const ThirdStep = () => {
                     />
 
                     <button onClick={handleValidation} >Valider</button>
-                    <button onClick={goToNextStep} >
+                    <button onClick={goToNextStep} disabled={!isValid} >
                         Aller à l'étape suivante
                     </button>
 

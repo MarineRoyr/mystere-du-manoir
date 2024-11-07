@@ -78,7 +78,7 @@ const FirstStep = () => {
 
                 {/* Affichage du score */}
                 <div className="bottom-content">
-                    <h3 className="score">Score: {score}</h3>
+                   
 
                     {/* Intégration du composant TimerDisplay */}
                     <TimerDisplay />

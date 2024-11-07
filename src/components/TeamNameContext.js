@@ -28,11 +28,10 @@ export const TeamNameProvider = ({ children }) => {
     });
     const [isGameOver, setIsGameOver] = useState(false);
 
-    // Fonction pour mettre à jour le score dans le localStorage
-    const updateScoreInLocalStorage = (newScore) => {
-        setScore(newScore);
-        localStorage.setItem('score', newScore);
-    };
+    // Met à jour le score dans le localStorage
+    useEffect(() => {
+        localStorage.setItem('score', score); // Assurez-vous que le score est sauvegardé en localStorage
+    }, [score]);
 
     // Fonction pour marquer la fin du jeu
     const markGameOver = () => {
@@ -40,22 +39,10 @@ export const TeamNameProvider = ({ children }) => {
         alert("Le jeu est terminé !");
     };
 
-
-
-
-    useEffect(() => {
-        if (!isGameOver) {
-            const interval = setInterval(() => {
-                updateScoreInLocalStorage(Math.max(score - 500, 0));
-            }, 10 * 60 * 1000);
-            return () => clearInterval(interval);
-        }
-    }, [score, isGameOver]);
-
     const resetLocalStorage = () => {
         localStorage.clear();
         setTeamName('');
-        updateScoreInLocalStorage(50000); // Utilisez la fonction pour mettre à jour le score
+        setScore(50000); // Réinitialise le score à 50000
         setResponses([]);
         setInputs({
             firstStep: '',
@@ -72,22 +59,12 @@ export const TeamNameProvider = ({ children }) => {
         alert('La session de jeu est réinitialisée');
     };
 
-    useEffect(() => {
-        // Réduire le score toutes les 10 minutes
-        const interval = setInterval(() => {
-            const newScore = Math.max(score - 500, 0); // Ne pas permettre de descendre en dessous de 0
-            updateScoreInLocalStorage(newScore);
-        }, 10 * 60 * 1000); // 10 minutes
-
-        return () => clearInterval(interval); // Nettoyer l'intervalle à la désinstallation du composant
-    }, [score]); // Ajoutez score comme dépendance
-
     return (
         <TeamNameContext.Provider value={{
             teamName,
             setTeamName,
             score,
-            setScore: updateScoreInLocalStorage,
+            setScore,
             responses,
             addResponse: (response) => {
                 setResponses((prevResponses) => [...new Set([...prevResponses, response])]);
@@ -99,7 +76,7 @@ export const TeamNameProvider = ({ children }) => {
                 localStorage.setItem('inputs', JSON.stringify({ ...inputs, [step]: value }));
             },
             isGameOver,
-            markGameOver, // Exposez la fonction pour marquer la fin du jeu
+            markGameOver,
             resetLocalStorage,
         }}>
             {children}

@@ -87,7 +87,7 @@ const SecondStep = () => {
                     />
 
                     <button onClick={handleValidation}>Valider</button>
-                    <button onClick={goToNextStep} >Aller à l'étape suivante</button>
+                    <button onClick={goToNextStep} disabled={!isValid} >Aller à l'étape suivante</button>
                     <button onClick={getHint} disabled={score < 1000 }>Obtenir un Indice (-1000 points)</button>
                 </div>
             </div>

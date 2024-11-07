@@ -122,9 +122,6 @@ input[disabled] {
 /* Boutons stylés */
 /* Boutons stylés */
 button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 10px 15px;
@@ -138,6 +135,7 @@ button {
   text-transform: uppercase;
   border-radius: 4px;
   gap: 20px;
+  margin-left: 10px;
 }
 
 button:disabled {
@@ -153,6 +151,12 @@ button:hover:not(:disabled) {
 
 button::before {
   content: " ➔";
+}
+
+.bottom-content  h2 {
+color: #ffffff;
+font-size: 32px;
+text-align: center;
 }
 
 /* Boîte à indices */
