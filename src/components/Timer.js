@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const Timer = ({ onTimerComplete }) => {
+    const { score, setScore } = useContext(TeamNameContext); // Accédez au score en temps réel
     const [expiryTimestamp, setExpiryTimestamp] = useState(null);
     const [timeRemaining, setTimeRemaining] = useState(0);
     const [isTimerComplete, setIsTimerComplete] = useState(false);  // Nouvel état pour savoir si le timer est terminé
@@ -40,6 +41,18 @@ const Timer = ({ onTimerComplete }) => {
         const seconds = String(totalSeconds % 60).padStart(2, '0');
         return `${minutes}:${seconds}`;
     };
+
+    useEffect(() => {
+        const scoreInterval = setInterval(() => {
+            if (score > 0) {
+                const newScore = Math.max(0, score - 500); // Réduit le score de 500, mais ne le laisse pas devenir négatif
+                setScore(newScore); // Mise à jour du score
+                localStorage.setItem('score', newScore); // Mise à jour dans localStorage
+            }
+        }, 600000); // 600000 ms = 10 minutes
+
+        return () => clearInterval(scoreInterval); // Nettoyage de l'intervalle
+    }, [score, setScore]);
 
     return (
         <div>
