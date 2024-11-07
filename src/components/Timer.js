@@ -59,8 +59,10 @@ const Timer = ({ onTimerComplete }) => {
         <div>
             {isTimerComplete ? (
                 <h2>Le temps est écoulé, votre session de jeu est terminée.</h2>
-            ) : (
+            ) : (<div>
                 <h2>Temps restant : {formatTime(timeRemaining)}</h2>
+                <h3 className="score">Score: {score}</h3>
+                </div>
             )}
         </div>
     );

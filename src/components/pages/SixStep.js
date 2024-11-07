@@ -87,7 +87,7 @@ const SixStep = () => {
                     </div>
 
                     <div className="bottom-content">
-                        <h3 className="score">Score: {score}</h3>
+                    <h3 className="score">Score: {score}</h3>
                         <div className="chrono-display"><Timer onTimerComplete={handleTimerComplete} /></div>
 
                     </div>
