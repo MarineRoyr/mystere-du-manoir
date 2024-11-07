@@ -104,11 +104,12 @@ p {
 input[type="text"] {
   padding: 10px;
   font-size: 16px;
+  font-weight: 600;
   width: 100%;
   margin: 40px 0;
   border-radius: 0; /* Pas de bord arrondi */
   background-color: #fffdfd;
-  color: #2c1c17;
+  color: #990c0c;
   box-sizing: border-box;
   border-radius: 4px;
   text-align: center;
