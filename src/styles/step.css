@@ -109,7 +109,7 @@ input[type="text"] {
   margin: 40px 0;
   border-radius: 0; /* Pas de bord arrondi */
   background-color: #fffdfd;
-  color: #990c0c;
+  color: #911111;
   box-sizing: border-box;
   border-radius: 4px;
   text-align: center;
@@ -118,6 +118,10 @@ input[type="text"] {
 input[disabled] {
   background-color: #555;
   color: #999;
+}
+
+::placeholder {
+  color: #a80909;
 }
 
 /* Boutons stylés */
