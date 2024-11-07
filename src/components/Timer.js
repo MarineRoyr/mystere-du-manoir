@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { TeamNameContext } from './TeamNameContext'; // Importez votre contexte
 
 const Timer = ({ onTimerComplete }) => {
     const { score, setScore } = useContext(TeamNameContext); // Accédez au score en temps réel
