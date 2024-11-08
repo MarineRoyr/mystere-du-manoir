@@ -29,6 +29,10 @@ export const TeamNameProvider = ({ children }) => {
     const [isGameOver, setIsGameOver] = useState(false);
     const [isTimerComplete, setIsTimerComplete] = useState(false); // Nouvel état pour vérifier si le timer est terminé
 
+    useEffect(() => {
+        localStorage.setItem('teamName', teamName); // Correction : on sauvegarde bien `teamName` et non `setTeamName`
+    }, [teamName]); 
+
     // Vérifie si le temps est écoulé au chargement
     useEffect(() => {
         const storedExpiryTimestamp = localStorage.getItem('expiryTimestamp');
@@ -38,12 +42,25 @@ export const TeamNameProvider = ({ children }) => {
         }
     }, []);
 
+
+    useEffect(() => {
+        const scoreInterval = setInterval(() => {
+            setScore(prevScore => {
+                const newScore = Math.max(0, prevScore - 500); // Réduit le score
+                localStorage.setItem('score', newScore); // Sauvegarde
+                return newScore;
+            });
+        }, 600000); // 600000 ms = 10 minutes
+
+        return () => clearInterval(scoreInterval); // Nettoyage si nécessaire (par ex., à la fermeture de l'application)
+    }, []); // Exécute une seule fois, au chargement de l'application
+
     // Met à jour le score dans le localStorage
     useEffect(() => {
         localStorage.setItem('score', score); // Assurez-vous que le score est sauvegardé en localStorage
     }, [score]);
 
-   
+  
 
     // Fonction pour marquer la fin du jeu
     const markGameOver = () => {

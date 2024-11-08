@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { TeamNameContext } from './TeamNameContext'; // Importez votre contexte
+import React, { useEffect, useState } from 'react';
 
 const Timer = ({ onTimerComplete }) => {
-    const { score, setScore } = useContext(TeamNameContext); // Accédez au score en temps réel
     const [expiryTimestamp, setExpiryTimestamp] = useState(null);
     const [timeRemaining, setTimeRemaining] = useState(0);
     const [isTimerComplete, setIsTimerComplete] = useState(false);  // Nouvel état pour savoir si le timer est terminé
@@ -43,17 +41,6 @@ const Timer = ({ onTimerComplete }) => {
         return `${minutes}:${seconds}`;
     };
 
-    useEffect(() => {
-        const scoreInterval = setInterval(() => {
-            if (score > 0) {
-                const newScore = Math.max(0, score - 500); // Réduit le score de 500, mais ne le laisse pas devenir négatif
-                setScore(newScore); // Mise à jour du score
-                localStorage.setItem('score', newScore); // Mise à jour dans localStorage
-            }
-        }, 600000); // 600000 ms = 10 minutes
-
-        return () => clearInterval(scoreInterval); // Nettoyage de l'intervalle
-    }, [score, setScore]);
 
     return (
         <div>
@@ -61,7 +48,6 @@ const Timer = ({ onTimerComplete }) => {
                 <h2>Le temps est écoulé, votre session de jeu est terminée.</h2>
             ) : (<div>
                 <h2>Temps restant : {formatTime(timeRemaining)}</h2>
-                <h3 className="score">Score: {score}</h3>
                 </div>
             )}
         </div>

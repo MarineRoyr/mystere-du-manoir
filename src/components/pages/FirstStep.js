@@ -83,6 +83,8 @@ const FirstStep = () => {
 
                     {/* Intégration du composant TimerDisplay */}
                     <TimerDisplay />
+
+                    <h3 className="score">Score: {score}</h3>
                 </div>
 
                 {/* Instructions pour l'utilisateur */}

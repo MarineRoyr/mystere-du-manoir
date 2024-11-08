@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { TeamNameContext } from './TeamNameContext'; // Importez votre contexte
+import React, { useEffect, useState } from 'react';
 
 const TimerDisplay = () => {
-    const { score, setScore } = useContext(TeamNameContext); // Accédez au score en temps réel
     const [expiryTimestamp, setExpiryTimestamp] = useState(() => {
         const storedExpiryTimestamp = localStorage.getItem('expiryTimestamp');
         // Si un timestamp est stocké, assurez-vous qu'il est valide, sinon définissez-le à 90 minutes par défaut
@@ -63,18 +61,7 @@ const TimerDisplay = () => {
         return () => clearInterval(interval); // Nettoyage de l'intervalle à la désinstallation du composant
     }, [isTimerRunning, expiryTimestamp]); // L'effet dépend de l'état du timer et de l'expiryTimestamp
 
-    // Utiliser un effet pour réduire le score toutes les 10 minutes
-    useEffect(() => {
-        const scoreInterval = setInterval(() => {
-            if (score > 0) {
-                const newScore = Math.max(0, score - 500); // Réduit le score de 500, mais ne le laisse pas devenir négatif
-                setScore(newScore); // Mise à jour du score
-                localStorage.setItem('score', newScore); // Mise à jour dans localStorage
-            }
-        }, 600000); // 600000 ms = 10 minutes
 
-        return () => clearInterval(scoreInterval); // Nettoyage de l'intervalle
-    }, [score, setScore]);
 
     // Fonction pour formater le temps restant en minutes et secondes
     const formatTime = (milliseconds) => {
@@ -87,7 +74,6 @@ const TimerDisplay = () => {
     return (
         <div>
             <h2>Temps restant : {formatTime(timeRemaining)}</h2>
-            <h3 className="score">Score: {score}</h3> {/* Affichez le score en temps réel */}
             <div>
                 <button onClick={startTimer}>Démarrer</button>
                 <button onClick={pauseTimer}>Pause</button>
