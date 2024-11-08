@@ -69,8 +69,8 @@ const Score = () => {
                     </div>
 
                     <p style={{ fontSize: '1.5rem' }}>Votre score final est : <strong>{score}</strong></p>
-                    <p style={{ fontSize: '1.2rem' }}>Un grand bravo pour votre détermination et votre esprit d'équipe !</p>
-                    <p style={{ fontSize: '1.2rem' }}>Vous avez su relever tous les défis et déverrouiller le mystère du manoir. Votre aventure a été épique et vous méritez d'être félicités !</p>
+                    <p style={{ fontSize: '1.2rem' }}>Un grand bravo pour votre détermination et votre esprit d'équipe ...</p>
+                    <p style={{ fontSize: '1.2rem' }}>Vous avez su relever tous les défis et déverrouiller le mystère du manoir. Aujourd'hui, le Manoir et Laura sont libérés de la malédiction grâce à vous ! Votre aventure fut épique et vous méritez d'être félicités.</p>
                     <p style={{ fontSize: '1.2rem' }}>Nous espérons vous revoir pour une nouvelle aventure pleine de surprises !</p>
                 </div>
 

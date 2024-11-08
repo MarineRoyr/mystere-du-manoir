@@ -61,7 +61,8 @@ const RituelStep = () => {
                 <div className='clue-container'>
                     <p>Le mot à déverrouiller le cryptex que vous trouverez dans le manoir est : <strong>RITUEL</strong>.</p>
                     <p>Utilisez-le pour déverrouiller le cryptex dans le coffre que vous avez trouvé.</p>
-                    <p>Entrez l'indice contenu dans le cryptex pour terminer le jeu :</p>
+                    <p>Une fois le RITUEL TERMINE ...</p>
+                    <p>Vous pourrez entrer l'indice contenu dans le cryptex pour terminer le jeu, ci dessous :</p>
                     <input
                         type="text"
                         value={inputValue}
