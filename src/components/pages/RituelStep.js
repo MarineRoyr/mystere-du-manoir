@@ -56,6 +56,7 @@ const RituelStep = () => {
             <div className='welcome-section'>
                 <h2>Bienvenue</h2>
                 <h3>{teamName}</h3>
+                <h3>dans votre guide virtuel</h3>
                 <h4>Le Rituel</h4>
                 <div className='chrono-display'><Timer onTimerComplete={handleTimerComplete} /></div>
                 <div className='clue-container'>

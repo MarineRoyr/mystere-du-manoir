@@ -62,6 +62,7 @@ const FourStep = () => {
         <div className='step-container'>
             <div className='welcome-section'>
                 <h2>Bienvenue </h2><h3>{teamName}</h3>
+                <h3>dans votre guide virtuel</h3>
                 <h4>Le Souffle du secret</h4>
                 <div className="clue-container">
                     <div className="responsive-iframe-container">
